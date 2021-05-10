@@ -9,3 +9,7 @@
 ## Örnek Sorgu
 
 ![postmanilk](https://user-images.githubusercontent.com/80010942/117708672-c6207400-b1d8-11eb-9369-36612ac31a25.JPG)
+
+## JobPosition için postmapping
+
+![jobpositionadd2](https://user-images.githubusercontent.com/80010942/117710019-4b585880-b1da-11eb-9115-6e784ab2aebb.JPG)
