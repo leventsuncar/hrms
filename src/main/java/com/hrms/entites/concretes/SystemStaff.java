@@ -19,7 +19,5 @@ public class SystemStaff {
     @NotNull
     private String userName;
 
-    @OneToOne
-    @JoinColumn(name = "staff_user_id")
-    private BaseUser user;
+
 }

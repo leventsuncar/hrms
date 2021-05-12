@@ -33,7 +33,5 @@ public class JobSeeker {
     @NotNull
     private int birthYear;
 
-    @OneToOne
-    @JoinColumn(name = "seeker_user_id")
-    private BaseUser user;
+
 }

@@ -22,6 +22,7 @@ public class EmployerManager implements EmployerService {
 
     @Override
     public void add(Employer employer) {
+
         employerDao.save(employer);
     }
 
