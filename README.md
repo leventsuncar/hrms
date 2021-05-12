@@ -8,7 +8,7 @@
 
 ## Örnek Sorgu
 
-![postmanilk](https://user-images.githubusercontent.com/80010942/117708672-c6207400-b1d8-11eb-9369-36612ac31a25.JPG)
+![qweqwasdver](https://user-images.githubusercontent.com/80010942/118002785-a1e7a300-b350-11eb-84a8-9cdd4aeb3280.jpg)
 
 ## JobPosition için PostMapping
 
