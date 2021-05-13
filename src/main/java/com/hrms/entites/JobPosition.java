@@ -1,4 +1,4 @@
-package com.hrms.entites.concretes;
+package com.hrms.entites;
 
 
 import lombok.Data;
@@ -8,17 +8,15 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@Table(name = "system_staff")
-public class SystemStaff {
+@Table(name = "job_position")
 
+public class JobPosition {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "name", unique = true, nullable = false)
     @NotNull
-    private String userName;
-
-
+    private String name;
 }

@@ -1,7 +1,4 @@
-package com.hrms.entites.concretes;
-
-
-
+package com.hrms.entites;
 
 
 import lombok.Data;
@@ -19,15 +16,15 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "email",unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     @NotNull
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     @NotNull
     private String password;
 
     @Column(name = "is_valid")
     @NotNull
-    private Boolean isValid;
+    private Boolean isValid;  //burayla alakalı hiç bilgim yok araştırmam gerek.
 }

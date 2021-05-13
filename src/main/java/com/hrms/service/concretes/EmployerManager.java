@@ -1,28 +1,27 @@
 package com.hrms.service.concretes;
 
-import com.hrms.dataAccess.abstracts.BaseUserDao;
 import com.hrms.dataAccess.abstracts.EmployerDao;
-import com.hrms.entites.concretes.Employer;
+import com.hrms.entites.Employer;
 import com.hrms.service.abstracts.EmployerService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class EmployerManager implements EmployerService {
 
-    private BaseUserDao baseUserDao;
-    private EmployerDao employerDao;
+    @Autowired
+    private EmployerDao employerDao;        //Field injection is no recommended
 
     @Autowired
-    public EmployerManager(BaseUserDao baseUserDao, EmployerDao employerDao) {
-        this.baseUserDao = baseUserDao;
-        this.employerDao = employerDao;
-    }
+    private ModelMapper modelMapper;        //Field injection önerilmez constructorla yapılacak
+
 
     @Override
     public void add(Employer employer) {
-
+        //sanırım burada Login Dao da çağırılmalı bunu nasıl yapacağımı bilmiyorum
         employerDao.save(employer);
     }
 

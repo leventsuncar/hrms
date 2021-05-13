@@ -1,6 +1,6 @@
 package com.hrms.api.controllers;
 
-import com.hrms.entites.concretes.Employer;
+import com.hrms.entites.Employer;
 import com.hrms.service.abstracts.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/employers")
 public class EmployersController {
-EmployerService employerService;
+    EmployerService employerService;
 
-@Autowired
+    @Autowired
     public EmployersController(EmployerService employerService) {
         this.employerService = employerService;
     }
