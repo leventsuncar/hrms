@@ -25,7 +25,7 @@ public class JobSeeker {
     @NotNull
     private String lastName;
 
-    @Column(name = "national_id", length = 11)
+    @Column(name = "national_id", length = 11,unique = true)
     @NotNull
     private Long nationalId;
 

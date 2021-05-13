@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@Table(name = "base_user_id")
-public class BaseUser {
+@Table(name = "login")
+public class Login {
 
     @Id
     @Column(name = "id")

@@ -1,9 +1,10 @@
 package com.hrms.entites.concretes;
 
-import com.sun.istack.NotNull;
+
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data

@@ -1,9 +1,10 @@
 package com.hrms.entites.concretes;
 
-import com.sun.istack.NotNull;
+
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -15,7 +16,7 @@ public class JobPosition {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "name", unique = true)//unique = true çalışmadı
+    @Column(name = "name", unique = true)
     @NotNull
     private String name;
 }
