@@ -38,7 +38,7 @@ public class Employer {
     @NotNull
     private Long telephoneNumber;
 
-    // login adlı tablo ile 1 e 1 ilişki kurulduğunu belirtir.
+    // user adlı tablo ile 1 e 1 ilişki kurulduğunu belirtir.
     @OneToOne
-    private Login login;
+    private User user;
 }

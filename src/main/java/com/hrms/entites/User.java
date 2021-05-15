@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@Table(name = "login")
-public class Login {
+@Table(name = "user")
+public class User {
 
     @Id
     @Column(name = "id")
@@ -25,6 +25,5 @@ public class Login {
     private String password;
 
     @Column(name = "is_valid")
-    @NotNull
     private Boolean isValid;  //burayla alakalı hiç bilgim yok araştırmam gerek.
 }

@@ -3,8 +3,8 @@ package com.hrms.dto;
 import lombok.Data;
 
 @Data
-public class LoginDto {
-    private int id;
+public class UserDto {
+
     private String email;
     private String password;
 }

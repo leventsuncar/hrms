@@ -16,19 +16,19 @@ public class JobSeeker {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "first_name",nullable = false)
+    @Column(name = "first_name", nullable = false)
     @NotNull
     private String firsName;
 
-    @Column(name = "last_name",nullable = false)
+    @Column(name = "last_name", nullable = false)
     @NotNull
     private String lastName;
 
-    @Column(name = "national_id", length = 11, unique = true,nullable = false)
+    @Column(name = "national_id", length = 11, unique = true, nullable = false)
     @NotNull
     private Long nationalId;
 
-    @Column(name = "birth_year", length = 4,nullable = false)
+    @Column(name = "birth_year", length = 4, nullable = false)
     @NotNull
     private int birthYear;
 

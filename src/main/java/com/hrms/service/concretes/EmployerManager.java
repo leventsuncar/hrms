@@ -1,13 +1,16 @@
 package com.hrms.service.concretes;
 
 import com.hrms.dataAccess.abstracts.EmployerDao;
+import com.hrms.dto.EmployerDto;
 import com.hrms.entites.Employer;
+import com.hrms.entites.User;
 import com.hrms.service.abstracts.EmployerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployerManager implements EmployerService {
@@ -20,15 +23,20 @@ public class EmployerManager implements EmployerService {
 
 
     @Override
-    public void add(Employer employer) {
-        //sanırım burada Login Dao da çağırılmalı bunu nasıl yapacağımı bilmiyorum
-        employerDao.save(employer);
+    public Employer add(EmployerDto employerDto, User user) {
+        Employer employer = modelMapper.map(employerDto, Employer.class);
+        employer.setUser(user);
+
+        return employerDao.save(employer);
     }
 
     @Override
-    public List<Employer> getAll() {
+    public List<EmployerDto> getAll() {
 
-        return employerDao.findAll();
+        List<Employer> employerList = employerDao.findAll();
+
+        return employerList.stream().map(employer -> modelMapper.map(employer,
+                EmployerDto.class)).collect(Collectors.toList());
     }
 
     @Override
