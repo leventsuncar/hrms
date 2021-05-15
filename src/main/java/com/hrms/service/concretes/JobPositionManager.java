@@ -31,8 +31,9 @@ public class JobPositionManager implements JobPositionService {
     }
 
     @Override
-    public JobPosition add(JobPosition jobPosition) {
-        return jobPositionDao.save(jobPosition);
+    public JobPosition add(JobPositionDto jobPosition) {
+       JobPosition position = modelMapper.map(jobPosition,JobPosition.class);
+        return jobPositionDao.save(position);
     }
 }
 

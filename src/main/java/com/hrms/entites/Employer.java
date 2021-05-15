@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-//bu bir entitydir
+//bu bir entity'dir
 @Entity
 //all args cons no args cons getter setter
 @Data

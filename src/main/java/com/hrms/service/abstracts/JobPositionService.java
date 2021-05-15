@@ -8,5 +8,5 @@ import java.util.List;
 public interface JobPositionService {
     List<JobPositionDto> getAll();
 
-    JobPosition add(JobPosition jobPosition);
+    JobPosition add(JobPositionDto jobPosition);
 }
