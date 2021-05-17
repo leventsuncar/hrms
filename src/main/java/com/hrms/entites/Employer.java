@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 //all args cons no args cons getter setter
 @Data
 //tablo adı
-@Table(name = "employer")
+@Table(name = "employers")
 public class Employer {
 
     //primary key tanımı
@@ -40,5 +40,5 @@ public class Employer {
 
     // user adlı tablo ile 1 e 1 ilişki kurulduğunu belirtir.
     @OneToOne
-    private User user;
+    private User userEmployer;
 }

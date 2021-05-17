@@ -25,7 +25,7 @@ public class EmployerManager implements EmployerService {
     @Override
     public Employer add(EmployerDto employerDto, User user) {
         Employer employer = modelMapper.map(employerDto, Employer.class);
-        employer.setUser(user);
+        employer.setUserEmployer(user);
 
         return employerDao.save(employer);
     }

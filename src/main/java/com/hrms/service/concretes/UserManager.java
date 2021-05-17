@@ -2,6 +2,8 @@ package com.hrms.service.concretes;
 
 import com.hrms.dataAccess.abstracts.UserDao;
 import com.hrms.dto.EmployerDto;
+import com.hrms.dto.JobSeekerDto;
+import com.hrms.dto.SystemStaffDto;
 import com.hrms.dto.UserDto;
 import com.hrms.entites.User;
 import com.hrms.service.abstracts.UserService;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserManager implements UserService {
+
 
     UserDao userDao;
     ModelMapper modelMapper;
@@ -31,10 +34,23 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public User add(EmployerDto employerDto) {
+    public User addUserEmployer(EmployerDto employerDto) {
         User user = modelMapper.map(employerDto, User.class);
         user.setIsValid(false);
 
         return userDao.save(user);
     }
+    public User addUserJobSeeker(JobSeekerDto jobSeekerDto){
+        User user = modelMapper.map(jobSeekerDto, User.class);
+        user.setIsValid(false);
+        return userDao.save(user);
+    }
+
+    @Override
+    public User addUserSystemStaff(SystemStaffDto systemStaffDto) {
+        User user = modelMapper.map(systemStaffDto,User.class);
+        user.setIsValid(false);
+        return userDao.save(user);
+    }
+
 }

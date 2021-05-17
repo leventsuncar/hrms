@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@Table(name = "system_staff")
+@Table(name = "system_staffs")
 public class SystemStaff {
 
     @Id
@@ -20,5 +20,7 @@ public class SystemStaff {
     @NotNull
     private String userName;
 
+    @OneToOne
+    private User userSystemStaff;
 
 }

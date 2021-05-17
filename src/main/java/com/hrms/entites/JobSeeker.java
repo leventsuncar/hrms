@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "job_seeker")
+@Table(name = "job_seekers")
 
 public class JobSeeker {
 
@@ -18,7 +18,7 @@ public class JobSeeker {
 
     @Column(name = "first_name", nullable = false)
     @NotNull
-    private String firsName;
+    private String firstName;
 
     @Column(name = "last_name", nullable = false)
     @NotNull
@@ -32,5 +32,7 @@ public class JobSeeker {
     @NotNull
     private int birthYear;
 
+    @OneToOne
+    private User userJobSeeker;
 
 }

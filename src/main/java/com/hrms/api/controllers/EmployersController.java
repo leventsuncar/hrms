@@ -32,7 +32,7 @@ public class EmployersController {
 
     @PostMapping("/add")
     public Employer add(@RequestBody EmployerDto employerDto) {
-        User user = userService.add(employerDto);
+        User user = userService.addUserEmployer(employerDto);
         return employerService.add(employerDto, user);
 
     }
