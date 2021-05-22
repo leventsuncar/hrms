@@ -15,7 +15,7 @@ import java.util.Locale;
 
 
 
-public class CJEStandardDateTimeConverter implements CJEDateTimeConverter
+public class DAVStandardDateTimeConverter implements DAVDateTimeConverter
 {
     public java.util.TimeZone TimeZone=java.util.TimeZone.getTimeZone("UTC");
 
