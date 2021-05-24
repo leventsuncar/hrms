@@ -13,6 +13,7 @@ public class HrmsApplication {
 
     }
     //ModelMapper Data Transfer Object'i Entity türüne çevirmek için.
+    //
     @Bean
     public ModelMapper modelMapper(){
     return new ModelMapper();

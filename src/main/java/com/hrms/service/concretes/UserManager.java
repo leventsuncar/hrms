@@ -37,10 +37,12 @@ public class UserManager implements UserService {
     public User addUserEmployer(EmployerDto employerDto) {
         User user = modelMapper.map(employerDto, User.class);
         user.setIsValid(false);
-
+        //User tablosundaki isValid fieldını default olarak false geçiyorum.
+        //Eğer kişi e posta doğrulamasını yaparsa true'ya çevireceğim
         return userDao.save(user);
     }
-    public User addUserJobSeeker(JobSeekerDto jobSeekerDto){
+
+    public User addUserJobSeeker(JobSeekerDto jobSeekerDto) {
         User user = modelMapper.map(jobSeekerDto, User.class);
         user.setIsValid(false);
         return userDao.save(user);
@@ -48,7 +50,7 @@ public class UserManager implements UserService {
 
     @Override
     public User addUserSystemStaff(SystemStaffDto systemStaffDto) {
-        User user = modelMapper.map(systemStaffDto,User.class);
+        User user = modelMapper.map(systemStaffDto, User.class);
         user.setIsValid(false);
         return userDao.save(user);
     }

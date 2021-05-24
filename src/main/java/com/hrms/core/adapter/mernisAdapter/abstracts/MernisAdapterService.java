@@ -1,4 +1,4 @@
-package com.hrms.adapter.mernisAdapter.abstracts;
+package com.hrms.core.adapter.mernisAdapter.abstracts;
 
 import com.hrms.dto.JobSeekerDto;
 

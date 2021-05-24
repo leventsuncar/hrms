@@ -1,9 +1,7 @@
 package com.hrms.api.controllers;
 
-import com.hrms.dataAccess.abstracts.SystemStaffDao;
 import com.hrms.dto.SystemStaffDto;
 import com.hrms.entites.SystemStaff;
-import com.hrms.entites.User;
 import com.hrms.service.abstracts.SystemStaffService;
 import com.hrms.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +14,21 @@ import java.util.List;
 public class SystemStaffsController {
     SystemStaffService systemStaffService;
     UserService userService;
+
     @Autowired
     public SystemStaffsController(SystemStaffService systemStaffService, UserService userService) {
         this.systemStaffService = systemStaffService;
         this.userService = userService;
     }
+
     @GetMapping("/getall")
-    public List<SystemStaffDto> getAll(){
+    public List<SystemStaffDto> getAll() {
         return systemStaffService.getAll();
     }
+
     @PostMapping("/add")
-    public SystemStaff add(@RequestBody SystemStaffDto systemStaffDto){
-        User user = userService.addUserSystemStaff(systemStaffDto);
-        return systemStaffService.add(systemStaffDto,user);
+    public SystemStaff add(@RequestBody SystemStaffDto systemStaffDto) {
+
+        return systemStaffService.add(systemStaffDto);
     }
 }

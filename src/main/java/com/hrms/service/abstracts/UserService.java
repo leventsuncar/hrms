@@ -10,8 +10,11 @@ import java.util.List;
 
 public interface UserService {
     List<UserDto> getAll();
+
     User addUserEmployer(EmployerDto employerDto);
+
     User addUserJobSeeker(JobSeekerDto jobSeekerDto);
+
     User addUserSystemStaff(SystemStaffDto systemStaffDto);
 
 }

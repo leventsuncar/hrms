@@ -34,6 +34,7 @@ public class Employer {
     private String website;
 
     //lenght verinin karakter uzunluğunu belirtir ama buradan ayarlayamadım.
+    //postgredeki veri türünden ötürü ayarlanmıyor sanırım.
     @Column(name = "telephone_number", length = 11, unique = true, nullable = false)
     @NotNull
     private Long telephoneNumber;
