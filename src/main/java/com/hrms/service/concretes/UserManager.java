@@ -46,7 +46,7 @@ public class UserManager implements UserService {
         String websiteDomain = employerDto.getWebsite().substring(4, employerDto.getWebsite().length());
         //websitenin www. karakterlerinden sonrasını alıyorum
         if (emailParts[1].equals(websiteDomain)) {
-            //emailin ilk parçasıyla(@ den önceki kısım) websitenin istediğim kısmıyla aynı ise
+            //emailin 2. parçasıyla(@ sonraki kısım) websitenin istediğim kısmıyla aynı ise
             User user = modelMapper.map(employerDto, User.class);
             user.setIsValid(false);
             //User tablosundaki isValid fieldını default olarak false geçiyorum.
