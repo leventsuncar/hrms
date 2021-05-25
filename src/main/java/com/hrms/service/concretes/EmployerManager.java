@@ -1,9 +1,6 @@
 package com.hrms.service.concretes;
 
-import com.hrms.core.utilities.results.DataResult;
-import com.hrms.core.utilities.results.Result;
-import com.hrms.core.utilities.results.SuccessDataResult;
-import com.hrms.core.utilities.results.SuccessResult;
+import com.hrms.core.utilities.results.*;
 import com.hrms.dataAccess.abstracts.EmployerDao;
 import com.hrms.dto.EmployerDto;
 import com.hrms.entites.Employer;
@@ -30,17 +27,23 @@ public class EmployerManager implements EmployerService {
     private UserService userService;        //Böyle de kullanılabilir Engin Hoca bunu önermiyor
 
     @Override
-    public Result add(EmployerDto employerDto) {
+    public Result add(EmployerDto employerDto) throws Exception {
 
-        User user = userService.addUserEmployer(employerDto);
-        //employer dto dan gelen user verileriyle yeni user ekliyorum.
-        Employer employer = modelMapper.map(employerDto, Employer.class);
-        //employerDto yu employer' çeviriyorum
-        employer.setUserEmployer(user);
-        //employer daki user fieldına yukarıda oluşturduğum user'ı ekliyorum.
-        employerDao.save(employer);
-        return new SuccessResult("İş veren eklendi");
-
+        //eğer girilen 2 şifre doğruysa
+        if (employerDto.getPassword().equals(employerDto.getConfirmPassword())) {
+            User user = userService.addUserEmployer(employerDto);
+            //user serviceden gelen metodla user ekle bilgileri employer dto dan al
+            Employer employer = modelMapper.map(employerDto, Employer.class);
+            //employer dto yu bir employer nesnesine dönüştür
+            employer.setUserEmployer(user);
+            //emplyoyer nesnesindeki user alanına yukarıda eklediğim user ı ekle
+            employerDao.save(employer);
+            //employerı kaydet
+            return new SuccessResult("İş veren eklendi");
+        } else {
+            //şifre
+            return new ErrorResult("Şifreler uyuşmuyor");
+        }
     }
 
     @Override

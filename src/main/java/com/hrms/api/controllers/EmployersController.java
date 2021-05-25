@@ -31,7 +31,7 @@ public class EmployersController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody EmployerDto employerDto) {
+    public Result add(@RequestBody EmployerDto employerDto) throws Exception {
 
         return employerService.add(employerDto);
 

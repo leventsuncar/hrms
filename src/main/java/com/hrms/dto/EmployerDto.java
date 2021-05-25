@@ -20,4 +20,5 @@ public class EmployerDto {
     private Long telephoneNumber;
     private String email; //Employer entity'sinde böyle bir bilgi yok. Bu bilgi User entitysinden gelecek.
     private String password; //Employer entity'sinde böyle bir bilgi yok. Bu bilgi User entitysinden gelecek.
+    private String confirmPassword;
 }

@@ -13,10 +13,10 @@ public interface UserService {
 
     DataResult<List<UserDto>> getAll();
 
-    User addUserEmployer(EmployerDto employerDto);
+    User addUserEmployer(EmployerDto employerDto) throws Exception;
 
     User addUserJobSeeker(JobSeekerDto jobSeekerDto);
 
-    User  addUserSystemStaff(SystemStaffDto systemStaffDto);
+    User addUserSystemStaff(SystemStaffDto systemStaffDto);
 
 }

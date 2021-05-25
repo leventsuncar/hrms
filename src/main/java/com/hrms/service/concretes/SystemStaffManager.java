@@ -44,6 +44,6 @@ public class SystemStaffManager implements SystemStaffService {
     public DataResult<List<SystemStaffDto>> getAll() {
         List<SystemStaff> systemStaffList = systemStaffDao.findAll();
         return new SuccessDataResult<List<SystemStaffDto>>(systemStaffList.stream().map(systemStaff -> modelMapper.map(systemStaff,
-                SystemStaffDto.class)).collect(Collectors.toList())) ;
+                SystemStaffDto.class)).collect(Collectors.toList()));
     }
 }

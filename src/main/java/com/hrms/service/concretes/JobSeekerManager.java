@@ -40,16 +40,28 @@ public class JobSeekerManager implements JobSeekerService {
 
     @Override
     public Result add(JobSeekerDto jobSeekerDto) throws Exception {
-        Boolean status = mernisAdapterService.verifyNationalId(jobSeekerDto);
-        if (status) {
-            User user = userService.addUserJobSeeker(jobSeekerDto);
-            JobSeeker jobSeeker = modelMapper.map(jobSeekerDto, JobSeeker.class);
-            jobSeeker.setUserJobSeeker(user);
-            jobSeekerDao.save(jobSeeker);
-            return new SuccessResult("İş arayan başarıyla eklendi");
-        } else {
-            return new ErrorResult("İş arayan eklenemedi");
-        }
 
+        if (jobSeekerDto.getPassword().equals(jobSeekerDto.getConfirmPassword())) {
+            //Önce girilen şifreleri kontrol ediyorum
+            Boolean status = mernisAdapterService.verifyNationalId(jobSeekerDto);
+            //mernis sonucunu status adlı değişkene atıyorum
+            if (status) {
+                //mernis doğrulaması başarılı ise(true)
+                User user = userService.addUserJobSeeker(jobSeekerDto);
+                //user servicedeki ilgili metodu çağırarak user oluşturuyorum
+                JobSeeker jobSeeker = modelMapper.map(jobSeekerDto, JobSeeker.class);
+                //dto yu entity ye çeviriyorum
+                jobSeeker.setUserJobSeeker(user);
+                //entitydeki user alanına burada oluşturduğum user ı ekliyorum
+                jobSeekerDao.save(jobSeeker);
+                //iş arayan nesnesini kaydediyorum
+                return new SuccessResult("İş arayan başarıyla eklendi");
+            } else {
+                return new ErrorResult
+                        ("Kimlik doğrulaması başarısız oldu lütfen bilgilerinizi kontrol ediniz");
+            }
+        } else {
+            return new ErrorResult("Girilen şifreler uyuşmuyor");
+        }
     }
 }

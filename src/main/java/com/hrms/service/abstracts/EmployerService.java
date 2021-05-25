@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployerService {
 
-    Result add(EmployerDto employerDto);
+    Result add(EmployerDto employerDto) throws Exception;
 
     DataResult<List<EmployerDto>> getAll();
 

@@ -12,5 +12,6 @@ public class JobSeekerDto {
     private int birthYear;
     private String email;
     private String password;
+    private String confirmPassword;
 
 }

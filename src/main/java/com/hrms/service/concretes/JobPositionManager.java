@@ -32,7 +32,7 @@ public class JobPositionManager implements JobPositionService {
     public DataResult<List<JobPositionDto>> getAll() {
         List<JobPosition> jobPositionList = jobPositionDao.findAll();
         return new SuccessDataResult<List<JobPositionDto>>(jobPositionList.stream().map(jobPosition ->
-                modelMapper.map(jobPosition, JobPositionDto.class)).collect(Collectors.toList())) ;
+                modelMapper.map(jobPosition, JobPositionDto.class)).collect(Collectors.toList()));
     }
 
     @Override
