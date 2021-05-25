@@ -1,12 +1,14 @@
 package com.hrms.service.abstracts;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
 import com.hrms.dto.JobPositionDto;
-import com.hrms.entites.JobPosition;
 
 import java.util.List;
 
 public interface JobPositionService {
-    List<JobPositionDto> getAll();
 
-    JobPosition add(JobPositionDto jobPosition);
+    DataResult<List<JobPositionDto>> getAll();
+
+    Result add(JobPositionDto jobPosition);
 }

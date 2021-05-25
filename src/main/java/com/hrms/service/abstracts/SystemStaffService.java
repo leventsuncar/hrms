@@ -1,14 +1,15 @@
 package com.hrms.service.abstracts;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
 import com.hrms.dto.SystemStaffDto;
-import com.hrms.entites.SystemStaff;
 
 import java.util.List;
 
 public interface SystemStaffService {
 
-    SystemStaff add(SystemStaffDto systemStaffDto);
+    Result add(SystemStaffDto systemStaffDto);
 
-    List<SystemStaffDto> getAll();
+    DataResult<List<SystemStaffDto>> getAll();
 
 }

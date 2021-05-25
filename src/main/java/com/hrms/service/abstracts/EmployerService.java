@@ -1,5 +1,7 @@
 package com.hrms.service.abstracts;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
 import com.hrms.dto.EmployerDto;
 import com.hrms.entites.Employer;
 
@@ -7,12 +9,12 @@ import java.util.List;
 
 public interface EmployerService {
 
-    Employer add(EmployerDto employerDto);
+    Result add(EmployerDto employerDto);
 
-    List<EmployerDto> getAll();
+    DataResult<List<EmployerDto>> getAll();
 
-    void delete(Employer employer);
+    Result delete(Employer employer);
 
-    void update(Employer employer);
+    Result update(Employer employer);
 
 }

@@ -1,5 +1,7 @@
 package com.hrms.service.concretes;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.SuccessDataResult;
 import com.hrms.dataAccess.abstracts.UserDao;
 import com.hrms.dto.EmployerDto;
 import com.hrms.dto.JobSeekerDto;
@@ -28,9 +30,10 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public List<UserDto> getAll() {
+    public DataResult<List<UserDto>> getAll() {
         List<User> userList = userDao.findAll();
-        return userList.stream().map(login -> modelMapper.map(login, UserDto.class)).collect(Collectors.toList());
+        return new SuccessDataResult<List<UserDto>>(userList.stream().map(login ->
+                modelMapper.map(login, UserDto.class)).collect(Collectors.toList())) ;
     }
 
     @Override
@@ -39,6 +42,7 @@ public class UserManager implements UserService {
         user.setIsValid(false);
         //User tablosundaki isValid fieldını default olarak false geçiyorum.
         //Eğer kişi e posta doğrulamasını yaparsa true'ya çevireceğim
+
         return userDao.save(user);
     }
 
@@ -46,12 +50,14 @@ public class UserManager implements UserService {
         User user = modelMapper.map(jobSeekerDto, User.class);
         user.setIsValid(false);
         return userDao.save(user);
+
     }
 
     @Override
     public User addUserSystemStaff(SystemStaffDto systemStaffDto) {
         User user = modelMapper.map(systemStaffDto, User.class);
         user.setIsValid(false);
+
         return userDao.save(user);
     }
 

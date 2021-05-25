@@ -1,5 +1,9 @@
 package com.hrms.service.concretes;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
+import com.hrms.core.utilities.results.SuccessDataResult;
+import com.hrms.core.utilities.results.SuccessResult;
 import com.hrms.dataAccess.abstracts.EmployerDao;
 import com.hrms.dto.EmployerDto;
 import com.hrms.entites.Employer;
@@ -26,33 +30,38 @@ public class EmployerManager implements EmployerService {
     private UserService userService;        //Böyle de kullanılabilir Engin Hoca bunu önermiyor
 
     @Override
-    public Employer add(EmployerDto employerDto) {
+    public Result add(EmployerDto employerDto) {
+
         User user = userService.addUserEmployer(employerDto);
         //employer dto dan gelen user verileriyle yeni user ekliyorum.
         Employer employer = modelMapper.map(employerDto, Employer.class);
         //employerDto yu employer' çeviriyorum
         employer.setUserEmployer(user);
         //employer daki user fieldına yukarıda oluşturduğum user'ı ekliyorum.
-        return employerDao.save(employer);
-        //Employer'ı ekleyip dönüyorum. Burası değişecek
+        employerDao.save(employer);
+        return new SuccessResult("İş veren eklendi");
+
     }
 
     @Override
-    public List<EmployerDto> getAll() {
-
+    public DataResult<List<EmployerDto>> getAll() {
         List<Employer> employerList = employerDao.findAll();
 
-        return employerList.stream().map(employer -> modelMapper.map(employer,
-                EmployerDto.class)).collect(Collectors.toList());
+        return new SuccessDataResult<List<EmployerDto>>(employerList.stream().map
+                (employer -> modelMapper.map(employer, EmployerDto.class))
+                .collect(Collectors.toList()), "İş veren listesi");
+
     }
 
     @Override
-    public void delete(Employer employer) {
+    public Result delete(Employer employer) {
         //Zamanla eklenecek
+        return null;
     }
 
     @Override
-    public void update(Employer employer) {
+    public Result update(Employer employer) {
         //Zamanla eklenecek
+        return null;
     }
 }

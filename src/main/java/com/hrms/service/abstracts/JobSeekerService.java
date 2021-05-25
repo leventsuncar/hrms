@@ -1,12 +1,14 @@
 package com.hrms.service.abstracts;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
 import com.hrms.dto.JobSeekerDto;
-import com.hrms.entites.JobSeeker;
 
 import java.util.List;
 
 public interface JobSeekerService {
-    List<JobSeekerDto> getAll();
 
-    JobSeeker add(JobSeekerDto jobSeekerDto) throws Exception;
+    DataResult<List<JobSeekerDto>> getAll();
+
+    Result add(JobSeekerDto jobSeekerDto) throws Exception;
 }

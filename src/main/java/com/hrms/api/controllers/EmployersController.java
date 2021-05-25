@@ -1,7 +1,8 @@
 package com.hrms.api.controllers;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
 import com.hrms.dto.EmployerDto;
-import com.hrms.entites.Employer;
 import com.hrms.service.abstracts.EmployerService;
 import com.hrms.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class EmployersController {
     }
 
     @GetMapping("/getall")
-    public List<EmployerDto> getAll() {
+    public DataResult<List<EmployerDto>> getAll() {
 
         return employerService.getAll();
 
     }
 
     @PostMapping("/add")
-    public Employer add(@RequestBody EmployerDto employerDto) {
+    public Result add(@RequestBody EmployerDto employerDto) {
 
         return employerService.add(employerDto);
 

@@ -1,6 +1,7 @@
 package com.hrms.service.concretes;
 
 import com.hrms.core.adapter.mernisAdapter.abstracts.MernisAdapterService;
+import com.hrms.core.utilities.results.*;
 import com.hrms.dataAccess.abstracts.JobSeekerDao;
 import com.hrms.dto.JobSeekerDto;
 import com.hrms.entites.JobSeeker;
@@ -31,22 +32,23 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     @Override
-    public List<JobSeekerDto> getAll() {
+    public DataResult<List<JobSeekerDto>> getAll() {
         List<JobSeeker> jobSeekerList = jobSeekerDao.findAll();
-        return jobSeekerList.stream().map(jobSeeker -> modelMapper.map(jobSeeker,
-                JobSeekerDto.class)).collect(Collectors.toList());
+        return new SuccessDataResult<List<JobSeekerDto>>(jobSeekerList.stream().map(jobSeeker -> modelMapper.map(jobSeeker,
+                JobSeekerDto.class)).collect(Collectors.toList()));
     }
 
     @Override
-    public JobSeeker add(JobSeekerDto jobSeekerDto) throws Exception {
+    public Result add(JobSeekerDto jobSeekerDto) throws Exception {
         Boolean status = mernisAdapterService.verifyNationalId(jobSeekerDto);
         if (status) {
             User user = userService.addUserJobSeeker(jobSeekerDto);
             JobSeeker jobSeeker = modelMapper.map(jobSeekerDto, JobSeeker.class);
             jobSeeker.setUserJobSeeker(user);
-            return jobSeekerDao.save(jobSeeker);
+            jobSeekerDao.save(jobSeeker);
+            return new SuccessResult("İş arayan başarıyla eklendi");
         } else {
-            throw new IllegalArgumentException("Hatalı bilgi");
+            return new ErrorResult("İş arayan eklenemedi");
         }
 
     }

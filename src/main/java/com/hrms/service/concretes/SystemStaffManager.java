@@ -1,5 +1,9 @@
 package com.hrms.service.concretes;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
+import com.hrms.core.utilities.results.SuccessDataResult;
+import com.hrms.core.utilities.results.SuccessResult;
 import com.hrms.dataAccess.abstracts.SystemStaffDao;
 import com.hrms.dto.SystemStaffDto;
 import com.hrms.entites.SystemStaff;
@@ -28,17 +32,18 @@ public class SystemStaffManager implements SystemStaffService {
     }
 
     @Override
-    public SystemStaff add(SystemStaffDto systemStaffDto) {
+    public Result add(SystemStaffDto systemStaffDto) {
         User user = userService.addUserSystemStaff(systemStaffDto);
         SystemStaff systemStaff = modelMapper.map(systemStaffDto, SystemStaff.class);
         systemStaff.setUserSystemStaff(user);
-        return systemStaffDao.save(systemStaff);
+        systemStaffDao.save(systemStaff);
+        return new SuccessResult("Sistem çalışanı eklendi");
     }
 
     @Override
-    public List<SystemStaffDto> getAll() {
+    public DataResult<List<SystemStaffDto>> getAll() {
         List<SystemStaff> systemStaffList = systemStaffDao.findAll();
-        return systemStaffList.stream().map(systemStaff -> modelMapper.map(systemStaff,
-                SystemStaffDto.class)).collect(Collectors.toList());
+        return new SuccessDataResult<List<SystemStaffDto>>(systemStaffList.stream().map(systemStaff -> modelMapper.map(systemStaff,
+                SystemStaffDto.class)).collect(Collectors.toList())) ;
     }
 }

@@ -1,7 +1,8 @@
 package com.hrms.api.controllers;
 
+import com.hrms.core.utilities.results.DataResult;
+import com.hrms.core.utilities.results.Result;
 import com.hrms.dto.JobSeekerDto;
-import com.hrms.entites.JobSeeker;
 import com.hrms.service.abstracts.JobSeekerService;
 import com.hrms.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,12 @@ public class JobSeekersController {
     }
 
     @GetMapping("/getall")
-    public List<JobSeekerDto> getAll() {
+    public DataResult<List<JobSeekerDto>> getAll() {
         return jobSeekerService.getAll();
     }
 
     @PostMapping("/add")
-    public JobSeeker add(@RequestBody JobSeekerDto jobSeekerDto) throws Exception {
+    public Result add(@RequestBody JobSeekerDto jobSeekerDto) throws Exception {
 
         return jobSeekerService.add(jobSeekerDto);
     }
