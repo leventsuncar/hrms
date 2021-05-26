@@ -1,9 +1,6 @@
 package com.hrms.service.concretes;
 
-import com.hrms.core.utilities.results.DataResult;
-import com.hrms.core.utilities.results.Result;
-import com.hrms.core.utilities.results.SuccessDataResult;
-import com.hrms.core.utilities.results.SuccessResult;
+import com.hrms.core.utilities.results.*;
 import com.hrms.dataAccess.abstracts.JobPositionDao;
 import com.hrms.dto.JobPositionDto;
 import com.hrms.entites.JobPosition;
@@ -39,9 +36,11 @@ public class JobPositionManager implements JobPositionService {
     public Result add(JobPositionDto jobPosition) {
         //Tekrarlama kontrolü database de.
 
-        JobPosition position = modelMapper.map(jobPosition, JobPosition.class);
-        jobPositionDao.save(position);
-        return new SuccessResult("İş pozisyonu eklendi");
+            JobPosition position = modelMapper.map(jobPosition, JobPosition.class);
+            jobPositionDao.save(position);
+            return new SuccessResult("İş pozisyonu eklendi");
+
+
     }
 }
 

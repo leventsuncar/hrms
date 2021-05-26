@@ -1,9 +1,13 @@
 package com.hrms.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 
 @Data
+@ApiModel(value = "Employer Data Transfer Object")
+//swagger açıklaması
 public class EmployerDto {
 
     //Her Employer bir userdır.
@@ -15,10 +19,17 @@ public class EmployerDto {
     //Bunun yerinde getter ve setterlar kullanılabilir.
     //Aynı şey bütün tablolar için geçerlidir.
 
+    @ApiModelProperty(required = true, value = "Company Name")
+    //swagger açıklaması
     private String companyName;
+    @ApiModelProperty(required = true, value = "Website with www.")
     private String website;
+    @ApiModelProperty(required = true, value = "Telephone Number")
     private Long telephoneNumber;
+    @ApiModelProperty(required = true, value = "Email")
     private String email; //Employer entity'sinde böyle bir bilgi yok. Bu bilgi User entitysinden gelecek.
+    @ApiModelProperty(required = true, value = "Password")
     private String password; //Employer entity'sinde böyle bir bilgi yok. Bu bilgi User entitysinden gelecek.
+    @ApiModelProperty(required = true, value = "Password Confirm")
     private String confirmPassword;
 }
