@@ -1,9 +1,11 @@
 package com.hrms.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 //bu bir entity'dir
 @Entity
@@ -11,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 //tablo adı
 @Table(name = "employers")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement"})
 public class Employer {
 
     //primary key tanımı
@@ -41,4 +44,7 @@ public class Employer {
     // user adlı tablo ile 1 e 1 ilişki kurulduğunu belirtir.
     @OneToOne
     private User userEmployer;
+
+    @OneToMany (mappedBy = "employer")
+    private List<JobAdvertisement> jobAdvertisement;
 }
