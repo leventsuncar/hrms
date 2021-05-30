@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,5 +93,21 @@ public class JobAdversitementManager implements JobAdversitementService {
         return new SuccessDataResult<List<JobAdvertisementDto>>( jobAdvertisements.stream()
                 .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
                 .collect(Collectors.toList()) );
+    }
+
+    @Override
+    //Bunun daha iyi bir yolu var
+    public DataResult<List<JobAdvertisementDto>> findAllByIsActiveTrue() {
+        List<JobAdvertisement> jobAdvertisements = jobAdvertisementDao.findAllByIsActiveTrue();
+
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisements.stream()
+        .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
+        .collect(Collectors.toList()));
+
+    }
+    public Result deleteById(int id){
+        Optional<JobAdvertisement> jobAdvertisement = jobAdvertisementDao.findById(id);
+        jobAdvertisement.orElseThrow().setIsActive(false);
+        return new SuccessResult("İş ilanı kaldırıldı");
     }
 }

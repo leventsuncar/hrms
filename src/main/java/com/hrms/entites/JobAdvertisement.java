@@ -1,8 +1,6 @@
 package com.hrms.entites;
 
 import lombok.Data;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,8 +12,6 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "job_advertisement")
-@SQLDelete(sql = "update aday set status = 2 where id = ?")
-@Where(clause = "status != 2")
 public class JobAdvertisement {
 
     @Id
@@ -39,6 +35,9 @@ public class JobAdvertisement {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     @ManyToOne
     @JoinColumn(name = "job_position_id", nullable = false)
     private JobPosition jobPosition;
@@ -51,5 +50,7 @@ public class JobAdvertisement {
     @ManyToOne
     @JoinColumn(name = "employer_id", nullable = false)
     private Employer employer;
+
+
 
 }

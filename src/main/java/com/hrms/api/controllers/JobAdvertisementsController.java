@@ -27,12 +27,24 @@ public class JobAdvertisementsController {
     public Result add(JobAdvertisementDto jobAdvertisementDto) {
         return jobAdversitementService.add(jobAdvertisementDto);
     }
+
     @GetMapping("/findbycompanyname")
-    public DataResult<List<JobAdvertisementDto>> findAllByEmployer_CompanyName(@RequestParam String companyName){
+    public DataResult<List<JobAdvertisementDto>> findAllByEmployer_CompanyName(@RequestParam String companyName) {
         return jobAdversitementService.findAllByEmployer_CompanyName(companyName);
     }
+
     @GetMapping("/sortbycreatedat")
-    public DataResult<List<JobAdvertisementDto>> findAllSortedByDate(){
+    public DataResult<List<JobAdvertisementDto>> findAllSortedByDate() {
         return jobAdversitementService.findAllSortedByDate();
+    }
+
+    @GetMapping("/findactive")
+    public DataResult<List<JobAdvertisementDto>> findAllByIsActiveTrue() {
+        return jobAdversitementService.findAllByIsActiveTrue();
+    }
+    @PutMapping
+    public Result deleteById(@RequestParam int id){
+       return jobAdversitementService.deleteById(id);
+
     }
 }
