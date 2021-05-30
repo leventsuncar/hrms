@@ -1,7 +1,6 @@
 package com.hrms.service.concretes;
 
 import com.hrms.core.utilities.results.DataResult;
-import com.hrms.core.utilities.results.ErrorResult;
 import com.hrms.core.utilities.results.SuccessDataResult;
 import com.hrms.dataAccess.abstracts.UserDao;
 import com.hrms.dto.EmployerDto;

@@ -52,5 +52,4 @@ public class JobAdvertisement {
     private Employer employer;
 
 
-
 }

@@ -5,21 +5,18 @@ import com.hrms.dataAccess.abstracts.CityDao;
 import com.hrms.dataAccess.abstracts.EmployerDao;
 import com.hrms.dataAccess.abstracts.JobAdvertisementDao;
 import com.hrms.dataAccess.abstracts.JobPositionDao;
-import com.hrms.dto.EmployerDto;
 import com.hrms.dto.JobAdvertisementDto;
-import com.hrms.entites.*;
+import com.hrms.entites.City;
+import com.hrms.entites.Employer;
+import com.hrms.entites.JobAdvertisement;
+import com.hrms.entites.JobPosition;
 import com.hrms.service.abstracts.JobAdversitementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,6 +102,7 @@ public class JobAdversitementManager implements JobAdversitementService {
         .collect(Collectors.toList()));
 
     }
+
     public Result deleteById(int id){
         Optional<JobAdvertisement> jobAdvertisement = jobAdvertisementDao.findById(id);
         jobAdvertisement.orElseThrow().setIsActive(false);

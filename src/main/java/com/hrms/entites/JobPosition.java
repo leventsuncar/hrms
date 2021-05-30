@@ -2,7 +2,7 @@ package com.hrms.entites;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "job_positions")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobAdvertisement"})
 public class JobPosition {
     @Id
     @Column(name = "id")
@@ -22,6 +22,6 @@ public class JobPosition {
     @NotNull
     private String name;
 
-    @OneToMany (mappedBy = "jobPosition")
+    @OneToMany(mappedBy = "jobPosition")
     private List<JobAdvertisement> jobAdvertisement;
 }

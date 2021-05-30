@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 //tablo adı
 @Table(name = "employers")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobAdvertisement"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "jobAdvertisement"})
 public class Employer {
 
     //primary key tanımı
@@ -45,6 +45,6 @@ public class Employer {
     @OneToOne
     private User userEmployer;
 
-    @OneToMany (mappedBy = "employer")
+    @OneToMany(mappedBy = "employer")
     private List<JobAdvertisement> jobAdvertisement;
 }
