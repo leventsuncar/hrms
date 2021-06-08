@@ -13,17 +13,26 @@ public class CVEducation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "school_name")
-    private String schoolName;
+    @Column(name = "high_school_name")
+    private String highSchoolName;
+
+    @Column(name = "high_school_start_year")
+    private int highSchoolStartYear;
+
+    @Column(name = "high_school_end_year")
+    private int highSchoolEndYear;
+
+    @Column(name = "university_name")
+    private String universityName;
 
     @Column(name = "university_department")
     private String universityDepartment;
 
-    @Column(name = "start_year")
-    private int startYear;
+    @Column(name = "university_start_year")
+    private int universityStartYear;
 
-    @Column(name = "end_year")
-    private int endYear;
+    @Column(name = "university_end_year")
+    private int universityEndYear;
 
     @ManyToOne
     @JoinColumn(name = "job_seeker_cv_id")

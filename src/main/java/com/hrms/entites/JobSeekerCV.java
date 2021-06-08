@@ -20,7 +20,6 @@ public class JobSeekerCV {
     @Column(name = "cover_letter")
     private String coverLetter;
 
-
     @OneToOne
     @JoinColumn(name = "job_seeker_id")
     private JobSeeker jobSeeker;

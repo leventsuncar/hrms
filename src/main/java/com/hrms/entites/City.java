@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -16,6 +18,8 @@ public class City {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @NotNull
+    @NotBlank
     @Column(name = "name", unique = true)
     private String name;
 

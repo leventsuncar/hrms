@@ -6,6 +6,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,12 +20,15 @@ public class JobAdvertisement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotNull
     @Column(name = "job_description", length = 500)
     private String jobDescription;
 
+    @NotNull
     @Column(name = "salary")
     private Integer salary;
 
+    @NotNull
     @Column(name = "open_position")
     private Integer openPosition;
 
@@ -35,6 +40,7 @@ public class JobAdvertisement {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @NotNull
     @Column(name = "is_active")
     private Boolean isActive;
 

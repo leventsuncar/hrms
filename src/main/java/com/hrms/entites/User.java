@@ -4,6 +4,7 @@ package com.hrms.entites;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,6 +19,7 @@ public class User {
 
     @Column(name = "email", unique = true, nullable = false)
     @NotNull
+    @Email(message = "Lütfen mailinizi doğru giriniz.")
     private String email;
 
     @Column(name = "password", nullable = false)
