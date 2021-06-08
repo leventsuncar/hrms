@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,5 +35,8 @@ public class JobSeeker {
 
     @OneToOne
     private User userJobSeeker;
+
+    @OneToOne(mappedBy = "jobSeeker")
+    private JobSeekerCV jobSeekerCV;
 
 }
