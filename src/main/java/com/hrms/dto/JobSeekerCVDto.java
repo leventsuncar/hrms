@@ -1,7 +1,9 @@
 package com.hrms.dto;
 
-import java.util.List;
+import lombok.Data;
 
+import java.util.List;
+@Data
 public class JobSeekerCVDto {
 
     private String jobSeekerFirstName;

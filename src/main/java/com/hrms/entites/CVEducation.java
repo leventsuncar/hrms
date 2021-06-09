@@ -34,7 +34,7 @@ public class CVEducation {
     @Column(name = "university_end_year")
     private int universityEndYear;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "job_seeker_cv_id")
     private JobSeekerCV jobSeekerCV;
 

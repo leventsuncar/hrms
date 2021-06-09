@@ -28,8 +28,8 @@ public class JobSeekerCV {
     @OneToMany(mappedBy = "jobSeekerCV")
     private List<CVCompetencies> cvCompetencies;
 
-    @OneToMany(mappedBy = "jobSeekerCV")
-    private List<CVEducation> cvEducations;
+    @OneToOne(mappedBy = "jobSeekerCV")
+    private CVEducation cvEducation;
 
     @OneToMany(mappedBy = "jobSeekerCV")
     private List<CVExperience> cvExperiences;
