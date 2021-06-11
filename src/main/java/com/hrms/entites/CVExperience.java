@@ -25,7 +25,7 @@ public class CVExperience {
     @Column(name = "end_year")
     private int endYear;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "job_seeker_cv_id")
     private JobSeekerCV jobSeekerCV;
 

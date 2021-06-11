@@ -21,7 +21,7 @@ public class CVCompetencies {
     @Column(name = "codding_language")
     private String codingLanguage;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "job_seeker_cv_id")
     private JobSeekerCV jobSeekerCV;
 

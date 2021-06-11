@@ -19,7 +19,7 @@ public class CVSocialLinks {
     @Column(name = "linkedin_link")
     private String linkedinLink;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "job_seeker_cv_id")
     private JobSeekerCV jobSeekerCV;
 }

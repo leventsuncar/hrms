@@ -3,14 +3,17 @@ package com.hrms.service.concretes;
 import com.hrms.core.utilities.results.DataResult;
 import com.hrms.core.utilities.results.Result;
 import com.hrms.core.utilities.results.SuccessDataResult;
+import com.hrms.core.utilities.results.SuccessResult;
 import com.hrms.dataAccess.abstracts.*;
 import com.hrms.dto.*;
 import com.hrms.entites.*;
 import com.hrms.service.abstracts.JobSeekerCVService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +34,8 @@ public class JobSeekerCVManager implements JobSeekerCVService {
     @Autowired
     CVSocialLinkDao cvSocialLinkDao;
     @Autowired
+    JobSeekerDao jobSeekerDao;
+    @Autowired
     ModelMapper modelMapper;
 
 
@@ -38,7 +43,6 @@ public class JobSeekerCVManager implements JobSeekerCVService {
     public DataResult<List<JobSeekerCVDto>> getAll() {
         List<JobSeekerCVDto> jobSeekerCVDtoList = new ArrayList<>();
         List<JobSeekerCV> jobSeekerCVList = jobSeekerCVDao.findAll();
-
 
 
         for (JobSeekerCV jobSeekerCV : jobSeekerCVList) {
@@ -52,10 +56,12 @@ public class JobSeekerCVManager implements JobSeekerCVService {
             jobSeekerCVDto.setCvCompentenciesDtoList(cvCompentenciesDtoList);
             //Dtodaki fieldları doldurmak için bir takım dönüştürmeler yapıyoruz
             //ve bunları dtomuzun içine set ediyoruz
+
             List<CVExperience> cvExperienceList = jobSeekerCV.getCvExperiences();
             List<CVExperienceDto> experienceDtoList = (cvExperienceList.stream()
                     .map(cvExperience -> modelMapper.map(cvExperience, CVExperienceDto.class))
                     .collect(Collectors.toList()));
+
             jobSeekerCVDto.setCvExperienceDtoList(experienceDtoList);
 
             List<CVLanguages> cvLanguagesList = jobSeekerCV.getCvLanguages();
@@ -70,6 +76,10 @@ public class JobSeekerCVManager implements JobSeekerCVService {
             CVSocialLinks socialLinks = jobSeekerCV.getCvSocialLinks();
             jobSeekerCVDto.setCvSocialLinkDto(modelMapper.map(socialLinks, CVSocialLinkDto.class));
             //bunu gerektiği kadar tekrarladıktan sonra yukarıda tanımladığımız dto listesine ekliyoruz.
+            jobSeekerCVDto.setJobSeekerFirstName(jobSeekerCV.getJobSeeker().getFirstName());
+            jobSeekerCVDto.setJobSeekerLastName(jobSeekerCV.getJobSeeker().getLastName());
+            jobSeekerCVDto.setEmail(jobSeekerCV.getJobSeeker().getUserJobSeeker().getEmail());
+            jobSeekerCVDto.setJobSeekerBirthYear(jobSeekerCV.getJobSeeker().getBirthYear());
             jobSeekerCVDtoList.add(jobSeekerCVDto);
         }
 
@@ -79,8 +89,58 @@ public class JobSeekerCVManager implements JobSeekerCVService {
     }
 
     @Override
+    @Transactional
     public Result add(JobSeekerCVDto jobSeekerCVDto) {
-        return null;
+
+        JobSeekerCV jobSeekerCV = modelMapper.map(jobSeekerCVDto, JobSeekerCV.class);
+
+        CVEducation cvEducation = modelMapper.map(jobSeekerCVDto.getCvEducationDto(), CVEducation.class);
+        cvEducation.setJobSeekerCV(jobSeekerCV);
+        cvEducationDao.save(cvEducation);
+        jobSeekerCV.setCvEducation(cvEducation);
+
+        CVSocialLinks cvSocialLinks = modelMapper.map(jobSeekerCVDto.getCvSocialLinkDto(), CVSocialLinks.class);
+       cvSocialLinks.setJobSeekerCV(jobSeekerCV);
+        cvSocialLinkDao.save(cvSocialLinks);
+        jobSeekerCV.setCvSocialLinks(cvSocialLinks);
+
+        List<CVLanguageDto> cvLanguageDtoList = jobSeekerCVDto.getCvLanguageDtoList();
+        List<CVLanguages> cvLanguagesList = (cvLanguageDtoList.stream()
+                .map(cvLanguages -> modelMapper.map(cvLanguages, CVLanguages.class))
+                .collect(Collectors.toList()));
+        for (CVLanguages cvLanguages : cvLanguagesList) {
+            cvLanguages.setJobSeekerCV(jobSeekerCV);
+            cvLanguageDao.save(cvLanguages);
+        }
+        jobSeekerCV.setCvLanguages(cvLanguagesList);
+
+
+        List<CVExperienceDto> cvExperienceDtoList = jobSeekerCVDto.getCvExperienceDtoList();
+        List<CVExperience> cvExperienceList = (cvExperienceDtoList.stream()
+                .map(cvExperience -> modelMapper.map(cvExperience, CVExperience.class))
+                .collect(Collectors.toList()));
+        for (CVExperience cvExperience : cvExperienceList) {
+            cvExperience.setJobSeekerCV(jobSeekerCV);
+            cvExperienceDao.save(cvExperience);
+        }
+        jobSeekerCV.setCvExperiences(cvExperienceList);
+
+
+        List<CVCompentenciesDto> cvCompentenciesDtoList = jobSeekerCVDto.getCvCompentenciesDtoList();
+        List<CVCompetencies> cvCompentenciesList = (cvCompentenciesDtoList.stream()
+                .map(cvCompentencies -> modelMapper.map(cvCompentencies, CVCompetencies.class))
+                .collect(Collectors.toList()));
+        for (CVCompetencies cvCompentencies : cvCompentenciesList) {
+            cvCompentencies.setJobSeekerCV(jobSeekerCV);
+            cvCompetenciesDao.save(cvCompentencies);
+        }
+        jobSeekerCV.setCvCompetencies(cvCompentenciesList);
+
+
+        jobSeekerCV.setJobSeeker(jobSeekerDao.findByUserJobSeeker_Email(jobSeekerCVDto.getEmail()));
+
+        jobSeekerCVDao.save(jobSeekerCV);
+        return new SuccessResult("Başarılı");
     }
 
     @Override

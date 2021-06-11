@@ -19,7 +19,7 @@ public class CVLanguages {
     @Column(name = "level")
     private String level;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "job_seeker_cv_id")
     private JobSeekerCV jobSeekerCV;
 
