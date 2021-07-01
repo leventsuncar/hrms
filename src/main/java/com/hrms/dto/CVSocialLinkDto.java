@@ -1,6 +1,7 @@
 package com.hrms.dto;
 
-import lombok.Data;
+import lombok.*;
+
 @Data
 public class CVSocialLinkDto {
 

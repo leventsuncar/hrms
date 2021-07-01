@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/jobadvertisement")
 public class JobAdvertisementsController {
 
@@ -42,9 +43,20 @@ public class JobAdvertisementsController {
     public DataResult<List<JobAdvertisementDto>> findAllByIsActiveTrue() {
         return jobAdversitementService.findAllByIsActiveTrue();
     }
-    @PutMapping
-    public Result deleteById(@RequestParam int id){
-       return jobAdversitementService.deleteById(id);
 
+    @PutMapping
+    public Result deleteById(@RequestParam int id) {
+        return jobAdversitementService.deleteById(id);
+
+    }
+
+    @GetMapping("/getAdvertisementById")
+    public DataResult<JobAdvertisementDto> getById(@RequestParam int id) {
+        return jobAdversitementService.getById(id);
+    }
+
+    @GetMapping("/city")
+    public DataResult<List<JobAdvertisementDto>> getByCity(@RequestParam String cityName) {
+        return null;
     }
 }

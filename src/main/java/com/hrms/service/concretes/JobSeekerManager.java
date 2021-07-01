@@ -2,9 +2,12 @@ package com.hrms.service.concretes;
 
 import com.hrms.core.adapter.mernisAdapter.abstracts.MernisAdapterService;
 import com.hrms.core.utilities.results.*;
+import com.hrms.dataAccess.abstracts.JobSeekerCVDao;
 import com.hrms.dataAccess.abstracts.JobSeekerDao;
+import com.hrms.dto.JobSeekerCVDto;
 import com.hrms.dto.JobSeekerDto;
 import com.hrms.entites.JobSeeker;
+import com.hrms.entites.JobSeekerCV;
 import com.hrms.entites.User;
 import com.hrms.service.abstracts.JobSeekerService;
 import com.hrms.service.abstracts.UserService;
@@ -12,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,20 +26,31 @@ public class JobSeekerManager implements JobSeekerService {
     private JobSeekerDao jobSeekerDao;
     private ModelMapper modelMapper;
     private UserService userService;
+    private JobSeekerCVDao jobSeekerCVDao;
 
     @Autowired
-    public JobSeekerManager(JobSeekerDao jobSeekerDao, UserService userService, ModelMapper modelMapper, MernisAdapterService mernisAdapterService) {
+    public JobSeekerManager(JobSeekerDao jobSeekerDao, JobSeekerCVDao jobSeekerCVDao, UserService userService, ModelMapper modelMapper, MernisAdapterService mernisAdapterService) {
         this.jobSeekerDao = jobSeekerDao;
         this.modelMapper = modelMapper;
         this.mernisAdapterService = mernisAdapterService;
         this.userService = userService;
+        this.jobSeekerCVDao = jobSeekerCVDao;
     }
 
     @Override
     public DataResult<List<JobSeekerDto>> getAll() {
         List<JobSeeker> jobSeekerList = jobSeekerDao.findAll();
-        return new SuccessDataResult<List<JobSeekerDto>>(jobSeekerList.stream().map(jobSeeker -> modelMapper.map(jobSeeker,
-                JobSeekerDto.class)).collect(Collectors.toList()));
+
+        List<JobSeekerDto> jobSeekerDtoList = new ArrayList<>();
+        for (JobSeeker jobSeeker : jobSeekerList) {
+
+            JobSeekerDto jobSeekerDto = modelMapper.map(jobSeeker, JobSeekerDto.class);
+
+            jobSeekerDtoList.add(jobSeekerDto);
+        }
+        return new SuccessDataResult<List<JobSeekerDto>>(jobSeekerDtoList);
+//        return new SuccessDataResult<List<JobSeekerDto>>(jobSeekerList.stream().map(jobSeeker -> modelMapper.map(jobSeeker,
+//                JobSeekerDto.class)).collect(Collectors.toList()));
     }
 
     @Override

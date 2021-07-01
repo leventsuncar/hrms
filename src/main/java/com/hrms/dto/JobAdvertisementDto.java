@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class JobAdvertisementDto {
 
-
+    private int id;
     private String jobDescription;
     private String cityName;
     private Integer salary;

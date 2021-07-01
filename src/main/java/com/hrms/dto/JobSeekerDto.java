@@ -8,6 +8,8 @@ import lombok.Data;
 @ApiModel(value = "Job Seeker Data Transfer Object")
 public class JobSeekerDto {
 
+
+    private int id;
     @ApiModelProperty(required = true, value = "First Name")
     private String firstName;
     @ApiModelProperty(required = true, value = "Last Name")
@@ -22,6 +24,6 @@ public class JobSeekerDto {
     private String password;
     @ApiModelProperty(required = true, value = "Confirm Password")
     private String confirmPassword;
-
+    private String coverLetter;
 
 }

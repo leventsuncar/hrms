@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/cv")
 public class JobSeekerCVController {
 
@@ -19,13 +20,18 @@ public class JobSeekerCVController {
     JobSeekerCVService jobSeekerCVService;
 
     @GetMapping("/getall")
-   public DataResult<List<JobSeekerCVDto>> getAll(){
+    public DataResult<List<JobSeekerCVDto>> getAll() {
         return jobSeekerCVService.getAll();
     }
+
     @PostMapping("/add")
-   public Result add(@RequestBody JobSeekerCVDto jobSeekerCVDto){
+    public Result add(@RequestBody JobSeekerCVDto jobSeekerCVDto) {
         jobSeekerCVService.add(jobSeekerCVDto);
         return new SuccessResult("Başarılı");
+    }
+    @GetMapping("/cvdetail")
+    public DataResult<JobSeekerCVDto> getById(@RequestParam int id){
+       return jobSeekerCVService.getByJobSeeker(id);
     }
 
 

@@ -8,4 +8,5 @@ import java.util.List;
 public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Integer> {
     List<JobAdvertisement> findAllByEmployer_CompanyName(String companyName);
     List<JobAdvertisement> findAllByIsActiveTrue();
+    List<JobAdvertisement> findAllByCity_Name(String cityName);
 }

@@ -47,40 +47,8 @@ public class JobSeekerCVManager implements JobSeekerCVService {
 
         for (JobSeekerCV jobSeekerCV : jobSeekerCVList) {
             //Buralar biraz karışık.
-            JobSeekerCVDto jobSeekerCVDto = modelMapper.map(jobSeekerCV, JobSeekerCVDto.class);
-            //Elimizdeli entityleri dto ya dönüştürüyoruz.
-            List<CVCompetencies> cvCompetencies = jobSeekerCV.getCvCompetencies();
-            List<CVCompentenciesDto> cvCompentenciesDtoList = (cvCompetencies.stream()
-                    .map(cvCompetencies1 -> modelMapper.map(cvCompetencies1, CVCompentenciesDto.class))
-                    .collect(Collectors.toList()));
-            jobSeekerCVDto.setCvCompentenciesDtoList(cvCompentenciesDtoList);
-            //Dtodaki fieldları doldurmak için bir takım dönüştürmeler yapıyoruz
-            //ve bunları dtomuzun içine set ediyoruz
 
-            List<CVExperience> cvExperienceList = jobSeekerCV.getCvExperiences();
-            List<CVExperienceDto> experienceDtoList = (cvExperienceList.stream()
-                    .map(cvExperience -> modelMapper.map(cvExperience, CVExperienceDto.class))
-                    .collect(Collectors.toList()));
-
-            jobSeekerCVDto.setCvExperienceDtoList(experienceDtoList);
-
-            List<CVLanguages> cvLanguagesList = jobSeekerCV.getCvLanguages();
-            List<CVLanguageDto> cvLanguageDtoList = (cvLanguagesList.stream()
-                    .map(cvLanguages -> modelMapper.map(cvLanguages, CVLanguageDto.class))
-                    .collect(Collectors.toList()));
-            jobSeekerCVDto.setCvLanguageDtoList(cvLanguageDtoList);
-
-            CVEducation cvEducation = jobSeekerCV.getCvEducation();
-            jobSeekerCVDto.setCvEducationDto(modelMapper.map(cvEducation, CVEducationDto.class));
-
-            CVSocialLinks socialLinks = jobSeekerCV.getCvSocialLinks();
-            jobSeekerCVDto.setCvSocialLinkDto(modelMapper.map(socialLinks, CVSocialLinkDto.class));
-            //bunu gerektiği kadar tekrarladıktan sonra yukarıda tanımladığımız dto listesine ekliyoruz.
-            jobSeekerCVDto.setJobSeekerFirstName(jobSeekerCV.getJobSeeker().getFirstName());
-            jobSeekerCVDto.setJobSeekerLastName(jobSeekerCV.getJobSeeker().getLastName());
-            jobSeekerCVDto.setEmail(jobSeekerCV.getJobSeeker().getUserJobSeeker().getEmail());
-            jobSeekerCVDto.setJobSeekerBirthYear(jobSeekerCV.getJobSeeker().getBirthYear());
-            jobSeekerCVDtoList.add(jobSeekerCVDto);
+            jobSeekerCVDtoList.add(mapCV(jobSeekerCV));
         }
 
 
@@ -100,7 +68,7 @@ public class JobSeekerCVManager implements JobSeekerCVService {
         jobSeekerCV.setCvEducation(cvEducation);
 
         CVSocialLinks cvSocialLinks = modelMapper.map(jobSeekerCVDto.getCvSocialLinkDto(), CVSocialLinks.class);
-       cvSocialLinks.setJobSeekerCV(jobSeekerCV);
+        cvSocialLinks.setJobSeekerCV(jobSeekerCV);
         cvSocialLinkDao.save(cvSocialLinks);
         jobSeekerCV.setCvSocialLinks(cvSocialLinks);
 
@@ -144,7 +112,55 @@ public class JobSeekerCVManager implements JobSeekerCVService {
     }
 
     @Override
+    public DataResult<JobSeekerCVDto> getByJobSeeker(int id) {
+        JobSeeker jobSeeker = jobSeekerDao.getOne(id);
+        JobSeekerCV jobSeekerCV = jobSeekerCVDao.findByJobSeeker(jobSeeker);
+
+
+        return new SuccessDataResult<JobSeekerCVDto>(mapCV(jobSeekerCV),"Başarılı inş");
+    }
+
+    @Override
     public DataResult<List<JobSeekerCVDto>> sortedByExperienceYearAndEducationEndYear() {
         return null;
     }
+    public JobSeekerCVDto mapCV(JobSeekerCV jobSeekerCV){
+        JobSeekerCVDto jobSeekerCVDto = modelMapper.map(jobSeekerCV, JobSeekerCVDto.class);
+        //Elimizdeli entityleri dto ya dönüştürüyoruz.
+        List<CVCompetencies> cvCompetencies = jobSeekerCV.getCvCompetencies();
+        List<CVCompentenciesDto> cvCompentenciesDtoList = (cvCompetencies.stream()
+                .map(cvCompetencies1 -> modelMapper.map(cvCompetencies1, CVCompentenciesDto.class))
+                .collect(Collectors.toList()));
+        jobSeekerCVDto.setCvCompentenciesDtoList(cvCompentenciesDtoList);
+        //Dtodaki fieldları doldurmak için bir takım dönüştürmeler yapıyoruz
+        //ve bunları dtomuzun içine set ediyoruz
+
+        List<CVExperience> cvExperienceList = jobSeekerCV.getCvExperiences();
+        List<CVExperienceDto> experienceDtoList = (cvExperienceList.stream()
+                .map(cvExperience -> modelMapper.map(cvExperience, CVExperienceDto.class))
+                .collect(Collectors.toList()));
+
+        jobSeekerCVDto.setCvExperienceDtoList(experienceDtoList);
+
+        List<CVLanguages> cvLanguagesList = jobSeekerCV.getCvLanguages();
+        List<CVLanguageDto> cvLanguageDtoList = (cvLanguagesList.stream()
+                .map(cvLanguages -> modelMapper.map(cvLanguages, CVLanguageDto.class))
+                .collect(Collectors.toList()));
+        jobSeekerCVDto.setCvLanguageDtoList(cvLanguageDtoList);
+
+        CVEducation cvEducation = jobSeekerCV.getCvEducation();
+        jobSeekerCVDto.setCvEducationDto(modelMapper.map(cvEducation, CVEducationDto.class));
+
+        CVSocialLinks socialLinks = jobSeekerCV.getCvSocialLinks();
+        jobSeekerCVDto.setCvSocialLinkDto(modelMapper.map(socialLinks, CVSocialLinkDto.class));
+        //bunu gerektiği kadar tekrarladıktan sonra yukarıda tanımladığımız dto listesine ekliyoruz.
+        jobSeekerCVDto.setJobSeekerFirstName(jobSeekerCV.getJobSeeker().getFirstName());
+        jobSeekerCVDto.setJobSeekerLastName(jobSeekerCV.getJobSeeker().getLastName());
+        jobSeekerCVDto.setEmail(jobSeekerCV.getJobSeeker().getUserJobSeeker().getEmail());
+        jobSeekerCVDto.setJobSeekerBirthYear(jobSeekerCV.getJobSeeker().getBirthYear());
+
+
+        return jobSeekerCVDto;
+    }
 }
+

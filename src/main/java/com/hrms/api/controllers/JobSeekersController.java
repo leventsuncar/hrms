@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(ApiPaths.JobSeekersCtrl.CTRL)
 @Api(value = ApiPaths.JobSeekersCtrl.CTRL)
 public class JobSeekersController {

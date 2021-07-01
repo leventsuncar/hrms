@@ -21,4 +21,8 @@ public interface JobAdversitementService {
     DataResult<List<JobAdvertisementDto>> findAllByIsActiveTrue();
 
     Result deleteById(int id);
+
+    DataResult<JobAdvertisementDto> getById(int id);
+
+    DataResult<List<JobAdvertisementDto>> getAllByCity(String cityName);
 }

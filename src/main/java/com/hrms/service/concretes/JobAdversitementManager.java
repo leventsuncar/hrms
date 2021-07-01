@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,15 +36,23 @@ public class JobAdversitementManager implements JobAdversitementService {
     @Autowired
     private CityDao cityDao;
 
-
     @Override
     public DataResult<List<JobAdvertisementDto>> getAll() {
 
         List<JobAdvertisement> jobAdvertisementList = jobAdvertisementDao.findAll();
+        List<JobAdvertisementDto> jobAdvertisementDtoList = new ArrayList<>();
+        for (JobAdvertisement jobAdvertisement : jobAdvertisementList) {
+            JobAdvertisementDto jobAdvertisementDto = modelMapper.map(jobAdvertisement, JobAdvertisementDto.class);
+            jobAdvertisementDto.setCityName(jobAdvertisement.getCity().getName());
+            jobAdvertisementDto.setEmployerCompanyName(jobAdvertisement.getEmployer().getCompanyName());
+            jobAdvertisementDto.setJobPositionName(jobAdvertisement.getJobPosition().getName());
+            jobAdvertisementDto.setId(jobAdvertisement.getId());
+            jobAdvertisementDtoList.add(jobAdvertisementDto);
+        }
 
-        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementList.stream()
-                .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
-                .collect(Collectors.toList()));
+
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDtoList);
+
     }
 
     @Override
@@ -53,17 +62,34 @@ public class JobAdversitementManager implements JobAdversitementService {
             City city = cityDao.findByName(jobAdvertisementDto.getCityName());
             JobPosition jobPosition = jobPositionDao.findByName(jobAdvertisementDto.getJobPositionName());
             JobAdvertisement jobAdvertisement = modelMapper.map(jobAdvertisementDto, JobAdvertisement.class);
-            jobAdvertisement.setCity(city);
+            if (cityDao.findByName(jobAdvertisementDto.getCityName()) == null) {
+                City city1 = new City();
+                city1.setName(jobAdvertisementDto.getCityName());
+                cityDao.save(city1);
+                jobAdvertisement.setCity(city1);
+            } else {
+                jobAdvertisement.setCity(city);
+            }
+
             jobAdvertisement.setEmployer(employer);
-            jobAdvertisement.setJobPosition(jobPosition);
+
+            if (jobPositionDao.findByName(jobAdvertisementDto.getJobPositionName()) == null) {
+                JobPosition jobPosition1 = new JobPosition();
+                jobPosition1.setName(jobAdvertisementDto.getJobPositionName());
+                jobPositionDao.save(jobPosition1);
+                jobAdvertisement.setJobPosition(jobPosition1);
+            } else {
+                jobAdvertisement.setJobPosition(jobPosition);
+            }
+
             jobAdvertisement.setCreatedAt(LocalDateTime.now());
             //Tarihi otomatik ekletemedim buradan hallettim
             jobAdvertisementDao.save(jobAdvertisement);
             return new SuccessResult("İş ilanı eklendi");
 
             //bunun daha kolay yolu olmalı.
-        }catch (Exception e){
-            return new ErrorResult("Başarısız. Eksik veya hatalı bilgi girdiniz. "+e.getMessage());
+        } catch (Exception e) {
+            return new ErrorResult("Başarısız. Eksik veya hatalı bilgi girdiniz. " + e.getMessage());
         }
 
     }
@@ -77,19 +103,19 @@ public class JobAdversitementManager implements JobAdversitementService {
                     .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
                     .collect(Collectors.toList()), companyName + ": Adlı Şirketin İş ilanları");
         } catch (Exception e) {
-            return new ErrorDataResult<List<JobAdvertisementDto>>("Başarısız. Error Message: "+ e.getMessage());
+            return new ErrorDataResult<List<JobAdvertisementDto>>("Başarısız. Error Message: " + e.getMessage());
         }
     }
 
     @Override
     public DataResult<List<JobAdvertisementDto>> findAllSortedByDate() {
-        Sort sort = Sort.by(Sort.Direction.DESC,"createdAt");
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
 
         List<JobAdvertisement> jobAdvertisements = jobAdvertisementDao.findAll(sort);
 
-        return new SuccessDataResult<List<JobAdvertisementDto>>( jobAdvertisements.stream()
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisements.stream()
                 .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
-                .collect(Collectors.toList()) );
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -98,14 +124,39 @@ public class JobAdversitementManager implements JobAdversitementService {
         List<JobAdvertisement> jobAdvertisements = jobAdvertisementDao.findAllByIsActiveTrue();
 
         return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisements.stream()
-        .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
-        .collect(Collectors.toList()));
+                .map(jobAdvertisement -> modelMapper.map(jobAdvertisement, JobAdvertisementDto.class))
+                .collect(Collectors.toList()));
 
     }
 
-    public Result deleteById(int id){
+    public Result deleteById(int id) {
         Optional<JobAdvertisement> jobAdvertisement = jobAdvertisementDao.findById(id);
         jobAdvertisement.orElseThrow().setIsActive(false);
         return new SuccessResult("İş ilanı kaldırıldı");
+    }
+    public DataResult<JobAdvertisementDto> getById(int id){
+        JobAdvertisement jobAdvertisement = jobAdvertisementDao.getOne(id);
+        JobAdvertisementDto jobAdvertisementDto = modelMapper.map(jobAdvertisement, JobAdvertisementDto.class);
+        jobAdvertisementDto.setCityName(jobAdvertisement.getCity().getName());
+        jobAdvertisementDto.setEmployerCompanyName(jobAdvertisement.getEmployer().getCompanyName());
+        jobAdvertisementDto.setJobPositionName(jobAdvertisement.getJobPosition().getName());
+        return new SuccessDataResult<JobAdvertisementDto>(jobAdvertisementDto, "Başarılı");
+    }
+    public DataResult<List<JobAdvertisementDto>> getAllByCity(String cityName){
+        List<JobAdvertisement> jobAdvertisementList = jobAdvertisementDao.findAllByCity_Name(cityName);
+        List<JobAdvertisementDto> jobAdvertisementDtoList = new ArrayList<>();
+        for(JobAdvertisement jobAdvertisement : jobAdvertisementList){
+            jobAdvertisementDtoList.add(mapAdvertisement(jobAdvertisement));
+        }
+
+        return new SuccessDataResult<List<JobAdvertisementDto>>(jobAdvertisementDtoList);
+    }
+    public JobAdvertisementDto mapAdvertisement(JobAdvertisement jobAdvertisement){
+        JobAdvertisementDto jobAdvertisementDto = modelMapper.map(jobAdvertisement, JobAdvertisementDto.class);
+        jobAdvertisementDto.setCityName(jobAdvertisement.getCity().getName());
+        jobAdvertisementDto.setEmployerCompanyName(jobAdvertisement.getEmployer().getCompanyName());
+        jobAdvertisementDto.setJobPositionName(jobAdvertisement.getJobPosition().getName());
+
+        return jobAdvertisementDto;
     }
 }

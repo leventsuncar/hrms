@@ -1,5 +1,6 @@
 package com.hrms.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "social_links")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "job_seeker_cv"})
 public class CVSocialLinks {
 
     @Id
