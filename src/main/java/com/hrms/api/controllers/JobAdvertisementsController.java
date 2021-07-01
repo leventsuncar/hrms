@@ -25,7 +25,7 @@ public class JobAdvertisementsController {
     }
 
     @PostMapping("/add")
-    public Result add(JobAdvertisementDto jobAdvertisementDto) {
+    public Result add(@RequestBody JobAdvertisementDto jobAdvertisementDto) {
         return jobAdversitementService.add(jobAdvertisementDto);
     }
 
